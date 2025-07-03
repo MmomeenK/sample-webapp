@@ -19,7 +19,7 @@
     </properties>
 
     <dependencies>
-        <!-- Servlet API for web development -->
+        <!-- Servlet API for Web Development -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
