@@ -19,7 +19,7 @@
     </properties>
 
     <dependencies>
-        <!-- Servlet API for Web Development -->
+        <!-- Servlet API for Web Development; 2nd Push trial -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
