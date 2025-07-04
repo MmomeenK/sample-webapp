@@ -1,0 +1,48 @@
+pipeline {
+    agent {label 'agent'}
+    stages{
+        stage('Checkout') {
+            steps {
+                checkout ([
+                    $class: 'GitSCM',
+                    branches: [[name:'*/main']],
+                    userRemoteConfigs:[[url: 'https://github.com/MmomeenK/sample-webapp.git', credentialsId:'github_token']]
+                ])
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh '''
+                    mvn clean install
+                '''
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh '''
+                    mvn test
+                '''
+            }
+        }
+
+        stage('Deploy To Artifactory') {
+            steps {
+                configFileProvide([configFile(fileId: 'ce5feaae-ea1d-46fb-b033-8743fcc51f8d', variable: 'MAVEN_SETTINGS')]) {
+                    sh '''
+                        mvn deploy -s $MAVEN_SETTINGS
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy War To Tomcat') {
+            steps {
+                sh '''
+                    echo "Deployed war file to tomcat"
+                '''
+            }
+        }
+    }
+}
